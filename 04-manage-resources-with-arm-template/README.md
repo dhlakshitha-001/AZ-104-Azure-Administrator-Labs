@@ -600,13 +600,3 @@ This hands-on exercise strengthened practical understanding of **Azure Resource 
 ## ✅ Lab Status
 
 **Completed — All Tasks 1–5**
-
-* [x] Task 1 — Create an Azure Resource Manager template
-* [x] Task 2 — Edit and deploy an ARM template using Azure Portal
-* [x] Task 3 — Deploy an ARM template using Azure PowerShell
-* [x] Task 4 — Deploy an ARM template using Azure CLI
-* [x] Task 5 — Deploy a resource using Azure Bicep
-* [x] Deployment verification completed
-* [x] Architecture diagram documented
-* [x] Screenshots organized
-* [x] GitHub documentation prepared
