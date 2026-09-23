@@ -550,8 +550,8 @@ Remove-AzResourceGroup -Name az104-rg3
 │   └── 21-disk5-created.png
 │
 └── notes/
-    ├── deployment-commands.md
-    └── arm-vs-bicep.md
+    ├── parameters.json/template.json
+    └── azuredeploydisk.bicep
 ```
 
 ---
