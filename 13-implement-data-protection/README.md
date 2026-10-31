@@ -12,8 +12,6 @@ Finally, Azure Site Recovery is configured to replicate the virtual machine to a
 
 ## Learning Objectives
 
-By completing this lab, the following skills are practiced:
-
 * Deploy Azure infrastructure using a custom ARM template.
 * Create and configure a Recovery Services vault.
 * Understand Azure Backup storage replication settings.
@@ -49,7 +47,7 @@ By completing this lab, the following skills are practiced:
 | Backup Time                         | 12:00 AM                         |
 | Instant Recovery Snapshot Retention | 2 days                           |
 
-> **Note:** Azure subscription availability, regional capacity, and portal changes may affect the available configuration options. Follow the lab instructions and document any environment-specific changes.
+> **Note:** Azure subscription availability, regional capacity, and portal changes may affect the available configuration options.
 
 ---
 
@@ -108,11 +106,35 @@ The lab provides alternative VM sizes if the initial deployment fails because of
 2. `Standard_D2s_v6`
 3. `Standard_D2s_v7`
 
-If a deployment retry fails because of partially deployed resources or resource conflicts, the lab instructions recommend deleting `az104-rg-region1` and restarting Task 1.
+If a deployment retry fails because of partially deployed resources or resource conflicts, review the existing resources before retrying.
 
-> **Important:** Deleting the resource group permanently deletes its resources. Only do this when appropriate for the lab environment.
+## Screenshots
 
-### Verification
+### 1. Custom Template Editor
+
+![Custom Template Editor](screenshots/01-template-deployment-editor.png)
+
+### 2. ARM Template Loaded
+
+![ARM Template Loaded](screenshots/02-template-json-loaded.png)
+
+### 3. Template Parameters Loaded
+
+![Template Parameters Loaded](screenshots/03-template-parameters-loaded.png)
+
+### 4. VM Deployment Configuration
+
+![VM Deployment Configuration](screenshots/04-vm-deployment-configuration.png)
+
+### 5. VM Deployment Completed
+
+![VM Deployment Completed](screenshots/05-vm-deployment-completed.png)
+
+### 6. Deployed VM and Virtual Network
+
+![Deployed VM and Virtual Network](screenshots/06-deployed-vm-and-vnet.png)
+
+## Verification
 
 Confirm that:
 
@@ -121,17 +143,6 @@ Confirm that:
 * The virtual machine was created.
 * The VM is deployed in Central US.
 * The resources are available in `az104-rg-region1`.
-
-### Screenshots
-
-| Screenshot                           | Description             |
-| ------------------------------------ | ----------------------- |
-| `01-template-deployment-editor.png`  | Custom template editor  |
-| `02-template-json-loaded.png`        | Loaded ARM template     |
-| `03-template-parameters-loaded.png`  | Loaded parameters       |
-| `04-vm-deployment-configuration.png` | Deployment settings     |
-| `05-vm-deployment-completed.png`     | Deployment success      |
-| `06-deployed-vm-and-vnet.png`        | Deployed infrastructure |
 
 ---
 
@@ -180,8 +191,6 @@ Geo-redundant storage maintains replicated backup data in a secondary Azure regi
 
 This provides additional protection against regional failures.
 
-The lab also introduces Cross Region Restore, which allows eligible backup data to be restored in a secondary Azure paired region.
-
 ## Configure Soft Delete
 
 1. Navigate to the vault's **Properties**.
@@ -190,7 +199,29 @@ The lab also introduces Cross Region Restore, which allows eligible backup data 
 4. Verify that the soft delete retention period is **14 days**.
 5. Close the configuration blade.
 
-### Verification
+### Soft Delete
+
+Soft delete helps protect backup data from accidental or malicious deletion by retaining deleted backup data for a configured period.
+
+## Screenshots
+
+### 7. Recovery Services Vault Creation
+
+![Recovery Services Vault Creation](screenshots/07-recovery-services-vault-creation.png)
+
+### 8. Recovery Services Vault Overview
+
+![Recovery Services Vault Overview](screenshots/08-recovery-services-vault-overview.png)
+
+### 9. Vault Backup Configuration
+
+![Vault Backup Configuration](screenshots/09-vault-backup-configuration.png)
+
+### 10. Vault Soft Delete Settings
+
+![Vault Soft Delete Settings](screenshots/10-vault-soft-delete-settings.png)
+
+## Verification
 
 Confirm that:
 
@@ -198,15 +229,6 @@ Confirm that:
 * The vault is located in Central US.
 * Storage replication is Geo-redundant.
 * Soft delete retention is 14 days.
-
-### Screenshots
-
-| Screenshot                                | Description                |
-| ----------------------------------------- | -------------------------- |
-| `07-recovery-services-vault-creation.png` | Vault creation settings    |
-| `08-recovery-services-vault-overview.png` | Vault overview             |
-| `09-vault-backup-configuration.png`       | Backup storage replication |
-| `10-vault-soft-delete-settings.png`       | Soft delete configuration  |
 
 ---
 
@@ -272,7 +294,7 @@ Select **OK** to create the backup policy.
    * Backup Pre-Check
    * Last Backup Status
 
-The lab notes that the backup status may initially be pending.
+The backup status may initially be pending.
 
 ## Initiate an On-Demand Backup
 
@@ -282,7 +304,33 @@ The lab notes that the backup status may initially be pending.
 4. Select **OK**.
 5. Proceed to Task 4 without waiting for the backup operation to finish.
 
-### Verification
+## Screenshots
+
+### 11. Backup Goal Configuration
+
+![Backup Goal Configuration](screenshots/11-backup-goal-configuration.png)
+
+### 12. Backup Policy Configuration
+
+![Backup Policy Configuration](screenshots/12-backup-policy-configuration.png)
+
+### 13. Backup VM Selection
+
+![Backup VM Selection](screenshots/13-backup-vm-selection.png)
+
+### 14. Backup Enabled
+
+![Backup Enabled](screenshots/14-backup-enabled.png)
+
+### 15. Protected VM Backup Details
+
+![Protected VM Backup Details](screenshots/15-protected-vm-backup-details.png)
+
+### 16. Backup Now Operation
+
+![Backup Now Operation](screenshots/16-backup-now-operation.png)
+
+## Verification
 
 Confirm that:
 
@@ -292,17 +340,6 @@ Confirm that:
 * Backup details are accessible.
 * An on-demand backup operation was initiated.
 
-### Screenshots
-
-| Screenshot                           | Description           |
-| ------------------------------------ | --------------------- |
-| `11-backup-goal-configuration.png`   | Backup goal selection |
-| `12-backup-policy-configuration.png` | Backup policy         |
-| `13-backup-vm-selection.png`         | Selected VM           |
-| `14-backup-enabled.png`              | Backup enablement     |
-| `15-protected-vm-backup-details.png` | Backup details        |
-| `16-backup-now-operation.png`        | On-demand backup      |
-
 ---
 
 # Task 4 – Monitor Azure Backup
@@ -311,7 +348,7 @@ Confirm that:
 
 Configure diagnostic settings to send Recovery Services vault logs and metrics to an Azure Storage account.
 
-This allows backup monitoring data to be retained and used by Log Analytics or third-party monitoring solutions.
+This allows backup monitoring data to be retained and used by Log Analytics or other monitoring solutions.
 
 ## Create a Storage Account
 
@@ -349,10 +386,7 @@ Logs and Metrics to storage
 * Azure Site Recovery Jobs
 * Azure Site Recovery Events
 
-6. Under Destination details, select:
-
-**Archive to a storage account**
-
+6. Under Destination details, select **Archive to a storage account**.
 7. Select the storage account created earlier.
 8. Select **Save**.
 
@@ -364,7 +398,29 @@ Logs and Metrics to storage
 4. Select **View details**.
 5. Review the job status and available details.
 
-### Verification
+## Screenshots
+
+### 17. Storage Account Deployment
+
+![Storage Account Deployment](screenshots/17-storage-account-deployment.png)
+
+### 18. Diagnostic Settings Configuration
+
+![Diagnostic Settings Configuration](screenshots/18-diagnostic-settings-configuration.png)
+
+### 19. Diagnostic Settings Saved
+
+![Diagnostic Settings Saved](screenshots/19-diagnostic-settings-saved.png)
+
+### 20. Backup Jobs Overview
+
+![Backup Jobs Overview](screenshots/20-backup-jobs-overview.png)
+
+### 21. Backup Job Details
+
+![Backup Job Details](screenshots/21-backup-job-details.png)
+
+## Verification
 
 Confirm that:
 
@@ -373,18 +429,6 @@ Confirm that:
 * The required diagnostic categories were selected.
 * The storage account was configured as the destination.
 * Backup jobs are visible in the vault.
-
-> **Note:** The availability and visibility of diagnostic categories and job details may depend on the Azure portal experience and the activities performed so far.
-
-### Screenshots
-
-| Screenshot                                 | Description               |
-| ------------------------------------------ | ------------------------- |
-| `17-storage-account-deployment.png`        | Storage account           |
-| `18-diagnostic-settings-configuration.png` | Diagnostic configuration  |
-| `19-diagnostic-settings-saved.png`         | Saved diagnostic settings |
-| `20-backup-jobs-overview.png`              | Backup jobs               |
-| `21-backup-job-details.png`                | Backup job details        |
 
 ---
 
@@ -414,7 +458,7 @@ This provides disaster recovery capabilities in case the primary region becomes 
 6. Select **Create**.
 7. Wait for deployment to complete.
 
-> **Important:** The secondary vault must be in a different region from the source VM. The lab uses West US as the secondary region.
+> **Important:** The secondary vault must be in a different region from the source VM.
 
 ## Configure Disaster Recovery
 
@@ -459,9 +503,33 @@ az104-rsv-region2
 | Synchronization percentage  | Indicates replication progress                              |
 | Protected                   | Initial synchronization is complete and the VM is protected |
 
-The lab expects the VM to eventually display a healthy replication state and **Protected** status after initial synchronization completes.
+## Screenshots
 
-### Verification
+### 22. Secondary Recovery Services Vault
+
+![Secondary Recovery Services Vault](screenshots/22-secondary-recovery-vault.png)
+
+### 23. Site Recovery Basics
+
+![Site Recovery Basics](screenshots/23-site-recovery-basics.png)
+
+### 24. Site Recovery Advanced Settings
+
+![Site Recovery Advanced Settings](screenshots/24-site-recovery-advanced-settings.png)
+
+### 25. Replication Started
+
+![Replication Started](screenshots/25-replication-started.png)
+
+### 26. Replicated Items Overview
+
+![Replicated Items Overview](screenshots/26-replicated-items-overview.png)
+
+### 27. Replicated VM Details
+
+![Replicated VM Details](screenshots/27-replicated-vm-details.png)
+
+## Verification
 
 Confirm that:
 
@@ -472,17 +540,6 @@ Confirm that:
 * Replication was started.
 * The replicated VM is visible in the secondary vault.
 * Replication health and protection status were reviewed.
-
-### Screenshots
-
-| Screenshot                               | Description              |
-| ---------------------------------------- | ------------------------ |
-| `22-secondary-recovery-vault.png`        | Secondary vault          |
-| `23-site-recovery-basics.png`            | Disaster recovery Basics |
-| `24-site-recovery-advanced-settings.png` | Advanced settings        |
-| `25-replication-started.png`             | Replication started      |
-| `26-replicated-items-overview.png`       | Replicated items         |
-| `27-replicated-vm-details.png`           | Replicated VM details    |
 
 ---
 
@@ -528,25 +585,25 @@ In this lab, the policy uses:
 
 ## Soft Delete
 
-Soft delete helps protect backup data from accidental or malicious deletion by retaining deleted backup data for a configured period.
+Soft delete helps protect backup data against accidental or malicious deletion by retaining deleted backup data for a configured period.
 
 The lab verifies a 14-day retention period.
 
 ## Azure Site Recovery
 
-Azure Site Recovery is an Azure disaster recovery service that replicates workloads to a secondary location.
+Azure Site Recovery is a disaster recovery solution that replicates workloads to a secondary Azure region.
 
 It supports disaster recovery planning by allowing protected workloads to be failed over to a secondary region when necessary.
 
 ## Azure Backup vs Azure Site Recovery
 
-| Feature           | Azure Backup                     | Azure Site Recovery                    |
-| ----------------- | -------------------------------- | -------------------------------------- |
-| Primary purpose   | Data protection and recovery     | Disaster recovery                      |
-| Main capability   | Creates backup recovery points   | Replicates workloads                   |
-| Recovery approach | Restore from backup              | Failover to secondary location         |
-| Typical use case  | Accidental deletion or data loss | Regional outage or major disruption    |
-| Configuration     | Backup policy and vault          | Replication and recovery configuration |
+| Feature            | Azure Backup                     | Azure Site Recovery                 |
+| ------------------ | -------------------------------- | ----------------------------------- |
+| Primary purpose    | Data protection and recovery     | Disaster recovery                   |
+| Main capability    | Creates backup recovery points   | Replicates workloads                |
+| Recovery approach  | Restore from backup              | Failover to secondary location      |
+| Typical use case   | Accidental deletion or data loss | Regional outage or major disruption |
+| Main configuration | Backup policy                    | Replication settings                |
 
 ---
 
@@ -596,9 +653,7 @@ Before deleting resources:
 4. Disable applicable security features if required for vault deletion.
 5. Delete the resource groups when the resources are ready for cleanup.
 
-> **Important:** A Recovery Services vault cannot necessarily be deleted while protected items, backup servers, or other dependencies remain. Soft delete and other security features may also affect the deletion process. Follow the Azure vault deletion requirements before attempting to remove the vault.
-
-For a disposable lab environment, resource-group deletion can be used after the required dependencies have been addressed.
+> **Important:** A Recovery Services vault cannot necessarily be deleted while protected items, backup servers, or other dependencies remain. Soft delete and other security features may also affect deletion.
 
 ---
 
@@ -608,24 +663,22 @@ This lab introduced Azure data protection and disaster recovery capabilities.
 
 The following areas were covered:
 
-* [ ] Deployed VM infrastructure using a custom ARM template.
-* [ ] Created a Recovery Services vault.
-* [ ] Reviewed backup storage replication settings.
-* [ ] Verified soft delete configuration.
-* [ ] Created an Azure VM backup policy.
-* [ ] Enabled VM backup.
-* [ ] Initiated an on-demand backup.
-* [ ] Created a storage account.
-* [ ] Configured diagnostic settings.
-* [ ] Reviewed Azure Backup jobs.
-* [ ] Created a secondary Recovery Services vault.
-* [ ] Configured Azure Site Recovery.
-* [ ] Started VM replication.
-* [ ] Reviewed replication health and protection status.
+* [x] Deployed VM infrastructure using a custom ARM template.
+* [x] Created a Recovery Services vault.
+* [x] Reviewed backup storage replication settings.
+* [x] Verified soft delete configuration.
+* [x] Created an Azure VM backup policy.
+* [x] Enabled VM backup.
+* [x] Initiated an on-demand backup.
+* [x] Created a storage account.
+* [x] Configured diagnostic settings.
+* [x] Reviewed Azure Backup jobs.
+* [x] Created a secondary Recovery Services vault.
+* [x] Configured Azure Site Recovery.
+* [x] Started VM replication.
+* [x] Reviewed replication health and protection status.
 
-**Lab Status:** In Progress / Completed
-
-> Update the lab status and checkboxes only after completing and verifying the corresponding activities.
+**Lab Status:** Completed
 
 ---
 
